@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -32,9 +33,9 @@ public class PlayerController : MonoBehaviour
     }
     [SerializeField] private bool isLadder;
     private float verticalInput;
-    
 
-
+    [Header("Room Camera")]
+    private GameObject currentCamera;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -115,8 +116,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            isClimbing = false;
-            if (isGrounded)
+            if (isGrounded && !isClimbing)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 
@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 coyoteCounter = 0;
 
-            } 
+            }
         }
 
         // climbing ladder
@@ -135,7 +135,6 @@ public class PlayerController : MonoBehaviour
         if (isLadder && Mathf.Abs(verticalInput) > 0f)
         {
             isClimbing = true;
-            
         }
 
 
@@ -152,17 +151,33 @@ public class PlayerController : MonoBehaviour
         {
             isLadder = true;
         }
-        if(isGrounded && collision.CompareTag("Ground"))
+
+        if (collision.CompareTag("Room"))
         {
-            rb.velocity = new Vector2(rb.velocity.x, 0f);
+            currentCamera = collision.gameObject;
         }
+
     }
+
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.layer == LayerMask.NameToLayer("Ground") && isClimbing)
+    //    {
+    //        isClimbing = false;
+    //        ani.speed = 1;
+    //        ani.SetBool("isClimb", false);
+    //    }
+            
+    //}
+
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Ladder") && isClimbing && verticalInput!=0)
+        if (collision.CompareTag("Ladder") && isClimbing == true && verticalInput!=0)
         {
-            transform.position = new Vector2(collision.transform.position.x, transform.position.y);
+            transform.position = new Vector2(collision.gameObject.transform.position.x, transform.position.y);
         }
+
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -171,6 +186,14 @@ public class PlayerController : MonoBehaviour
         {
             isClimbing = false;
             isLadder = false;
+        }
+
+        if (collision.CompareTag("Room"))
+        {
+            if (collision.gameObject == currentCamera)
+            {
+                currentCamera = null;
+            }
         }
     }
 
@@ -202,12 +225,12 @@ public class PlayerController : MonoBehaviour
         return isGrounded && moveInput != 0;
     }
 
-    public bool isMove()
+    public bool IsMove()
     {
         return rb.velocity.x != 0 || rb.velocity.y!=0;
     }
 
-    public void setMoving(float value1,float value2)
+    public void SetMoving(float value1,float value2)
     {
         rb.velocity = new Vector2(value1, value2);
     }
@@ -259,11 +282,10 @@ public class PlayerController : MonoBehaviour
         if (isClimbing)
         {
             ani.SetBool("isClimb", true);
-            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)) ani.speed = 1.6f;
-            else
-            {
-                ani.speed = 0;
-            }
+            if (verticalInput != 0) ani.speed = 1.1f;
+            else ani.speed = 0f;
+
+
         }
         else
         {

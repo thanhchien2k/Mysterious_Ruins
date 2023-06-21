@@ -37,7 +37,7 @@ public class Enemy_follow : MonoBehaviour
         {
             flip();
 
-            if ((player.localScale.x==this.transform.localScale.x || playerController.isMove()) && isChasing ) {
+            if ((player.localScale.x==this.transform.localScale.x || playerController.IsMove()) && isChasing ) {
                 enemyFollowing();
                 canShocked = true;
             }
@@ -136,7 +136,7 @@ public class Enemy_follow : MonoBehaviour
 
         if (shockedTimer == 0)
         {
-            if (playerController.isMove() || player.localScale.x == this.transform.localScale.x)
+            if (playerController.IsMove() || player.localScale.x == this.transform.localScale.x)
             {
                 isChasing = true;
             }

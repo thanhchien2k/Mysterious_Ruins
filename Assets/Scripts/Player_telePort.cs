@@ -5,11 +5,17 @@ using UnityEngine;
 public class Player_telePort : MonoBehaviour
 {
     private GameObject currentTeleport;
+    private Player_Item playerItems;
     private bool isTeleport;
+
+    private void Awake()
+    {
+        playerItems = GetComponent<Player_Item>();
+    }
     private void Update()
     {
-        if (currentTeleport == null) return;
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (currentTeleport == null || !playerItems.Checkcard()) return;
+        if (Input.GetKeyDown(KeyCode.UpArrow) && (currentTeleport.GetComponent<Teleporter>().GetTeleportColor() == playerItems.GetColorCurrentCard()) )
         {
             transform.position = currentTeleport.GetComponent<Teleporter>().GetDestination().position;
         }

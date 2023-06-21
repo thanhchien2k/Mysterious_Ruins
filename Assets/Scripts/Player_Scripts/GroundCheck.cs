@@ -20,7 +20,7 @@ public class GroundCheck : MonoBehaviour
     void Update()
     {
         center = groundCheckBox.position;
-        sizeBox = new Vector2(1f, 0.15f);
+        sizeBox = new Vector2(0.8f, 0.01f);
         groundCheck = Physics2D.OverlapBox(center, sizeBox,0, Ground);
 
     }

@@ -15,6 +15,7 @@ TagManager:
   - Deep
   - RespawnPoint
   - TelePort
+  - Card
   layers:
   - Default
   - TransparentFX

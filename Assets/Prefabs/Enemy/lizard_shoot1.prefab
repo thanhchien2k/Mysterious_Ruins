@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9722a362841798458e80c24de878279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 7
+  Speed: 6.8
   hit: 0
 --- !u!114 &3928072461702069761
 MonoBehaviour:
@@ -387,7 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9722a362841798458e80c24de878279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 7
+  Speed: 6.8
   hit: 0
 --- !u!114 &3928072462012033532
 MonoBehaviour:
@@ -425,9 +425,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3928072462541397326}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.12, y: -1.01, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3928072463023397571}
@@ -607,6 +607,7 @@ MonoBehaviour:
   - {fileID: 3928072462012033524}
   - {fileID: 3928072463256433374}
   - {fileID: 3928072461702069763}
+  delayShootingTime: 0
 --- !u!1 &3928072463256433374
 GameObject:
   m_ObjectHideFlags: 0
@@ -776,7 +777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9722a362841798458e80c24de878279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 7
+  Speed: 6.8
   hit: 0
 --- !u!114 &3928072463256433372
 MonoBehaviour:

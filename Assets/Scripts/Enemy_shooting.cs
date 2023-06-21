@@ -7,7 +7,13 @@ public class Enemy_shooting : MonoBehaviour
     private Animator ani;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject[] fireBall;
-    public void enemyShooting()
+    [SerializeField] private float delayShootingTime;
+
+    private void Awake()
+    {
+        ani = GetComponent<Animator>();
+    }
+    private void enemyShooting()
     {
             fireBall[selectFireBall()].transform.position = firePoint.transform.position;
             fireBall[selectFireBall()].GetComponent<EnemyProjectTitle>().SetProjectTitleActive();
@@ -23,4 +29,13 @@ public class Enemy_shooting : MonoBehaviour
 
         return 0;
     }
+
+    private IEnumerator DelayShooting()
+    {
+        ani.speed = 0;
+        yield return new WaitForSeconds(delayShootingTime);
+        ani.speed = 1;
+    }
+
+
 }

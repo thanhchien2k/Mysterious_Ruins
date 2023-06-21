@@ -10,6 +10,7 @@ public class UImanager : MonoBehaviour
 {
     [SerializeReference] private GameObject gameOverScreen;
     [SerializeReference] private GameObject pauseScreen;
+    [SerializeReference] private PlayerController playerControl;
 
     private void Awake()
     {
@@ -23,6 +24,23 @@ public class UImanager : MonoBehaviour
         {
             if (pauseScreen.activeInHierarchy) PauseGame(false);
             else PauseGame(true);
+        }
+
+        if (pauseScreen.activeInHierarchy)
+        {
+            Time.timeScale = 0;
+            if (playerControl != null)
+            {
+                playerControl.enabled = false;
+            }
+        }
+        else
+        {
+            Time.timeScale = 1;
+            if (playerControl != null)
+            {
+                playerControl.enabled = true;
+            }
         }
     }
     #region GameOver
@@ -49,10 +67,32 @@ public class UImanager : MonoBehaviour
     public void PauseGame(bool _staus)
     {
         pauseScreen.SetActive(_staus);
-        if (_staus) Time.timeScale = 0;
-        else Time.timeScale = 1;
+        if (_staus)
+        {
+            Time.timeScale = 0;
+            if (playerControl != null)
+            {
+                playerControl.enabled = false;
+            }
+        }
+        else 
+        { 
+            Time.timeScale = 1;
+            if (playerControl != null)
+            {
+                playerControl.enabled = true;
+            }
+        }
     }
     
+    public void SoundVolume()
+    {
+        SoundManager.instance.ChangeSoundVolume(0.2f);
+    }    
+    public void MusicVolume()
+    {
+        SoundManager.instance.ChangeMusicVolume(0.2f);
+    }
     #endregion
 
 }

@@ -46,7 +46,7 @@ public class Player_Respawn : MonoBehaviour
         if (GetComponent<PlayerController>() != null)
         {
             playercontroller = GetComponent<PlayerController>();
-            playercontroller.setMoving(0, 0);
+            playercontroller.SetMoving(0, 0);
             playercontroller.enabled = false;
         }
         yield return new WaitForSeconds(1f);
