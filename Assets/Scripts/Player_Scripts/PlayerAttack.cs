@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
-
 public class PlayerAttack : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -31,7 +30,7 @@ public class PlayerAttack : MonoBehaviour
             Items.subBullet(1);
             
         }
-        else if(Input.GetKeyDown(KeyCode.F) && Items.GetBullet() > 0)
+        else if(Input.GetKeyDown(KeyCode.F) && playerController.canAttack() && Items.GetBullet() > 0)
         {
             Attack();
             Items.subBullet(1);

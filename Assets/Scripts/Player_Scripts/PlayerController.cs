@@ -1,15 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator ani;
+    [SerializeField] private Behaviour[] component;
 
     [Header ("Moving")]
     [SerializeField] GroundCheck check;
@@ -17,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float runSpeed;
     [SerializeField]private bool isGrounded;
     private float jumpForce;
-    public float jumpHeight = 2f;
+    [SerializeField] private float jumpHeight = 2f;
 
     [Header("Coyote Time")]
     [SerializeField] private float coyoteTime;
@@ -25,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("climb ladder")]
     [SerializeField] private float climbSpeed;
-    [SerializeField]private bool isClimbing;
+    private bool isClimbing;
     public bool IsClimbing
     {
         get { return isClimbing; }
@@ -34,30 +32,33 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isLadder;
     private float verticalInput;
 
-    [Header("Room Camera")]
-    private GameObject currentCamera;
-    // Start is called before the first frame update
+    [Header("OnPlatformMoving")]
+    public bool isOnPlatform;
+    public Rigidbody2D platformRb;
+
+    [Header("Sound")]
+    [SerializeField] AudioClip jumpSound;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         ani = GetComponent<Animator>();
-        
-        // tinh luc de nhay
-        
-
+        isOnPlatform = false;
     }
+
     private void Start()
     {
         jumpForce = Mathf.Sqrt(jumpHeight * -2 * (Physics2D.gravity.y * rb.gravityScale));
     }
 
-    // Update is called once per frame
-
-
-
     private void FixedUpdate()
     {
-       
+        if (DialogueManager.isMessageActive)
+        {
+            rb.velocity = new Vector2(0,rb.velocity.y);
+            return;
+        }
+
         isGrounded = check.groundCheck;
         SmoothJump();
 
@@ -85,7 +86,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, verticalInput * climbSpeed);
             //rb.velocity = new Vector2(0f, rb.velocity.y);
         }
-        else
+        else if(!isClimbing && !isOnPlatform)
         {
             rb.gravityScale = 2.8f;
         }
@@ -94,12 +95,27 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // 
+        if (DialogueManager.isMessageActive)
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+            ani.SetBool("isGround", true);
+            ani.SetBool("isRunning", false);
+            ani.SetBool("isJump", false);
+            return;
+        }
+
         moveInput = Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector2(moveInput * runSpeed, rb.velocity.y);
+
+        if (isOnPlatform)
+        {
+            rb.velocity = new Vector2(moveInput * runSpeed + platformRb.velocity.x, rb.velocity.y);
+        }
+        else
+        {
+            rb.velocity = new Vector2(moveInput * runSpeed, rb.velocity.y);
+        }
 
         // ktra dk flip player
-
         if (moveInput != 0) {
             if(moveInput >0)
             {
@@ -110,22 +126,24 @@ public class PlayerController : MonoBehaviour
                 playerFlip(-1);
             }
         }
-        // ktra dieu kien nhay
-        
 
+        // ktra dieu kien nhay
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isGrounded && !isClimbing)
             {
+                SetGravetiScale(2.8f);
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                SoundManager.instance.PlaySound(jumpSound);
 
             }
             else if (coyoteCounter > 0 && !isGrounded)
             {
+
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 coyoteCounter = 0;
-
+                SoundManager.instance.PlaySound(jumpSound);
             }
         }
 
@@ -141,9 +159,7 @@ public class PlayerController : MonoBehaviour
         // update animation cho player
         updateAnimations();
 
-        
-
-}
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -151,23 +167,15 @@ public class PlayerController : MonoBehaviour
         {
             isLadder = true;
         }
-
-        if (collision.CompareTag("Room"))
-        {
-            currentCamera = collision.gameObject;
-        }
-
     }
 
     //private void OnCollisionEnter2D(Collision2D collision)
     //{
-    //    if (collision.gameObject.layer == LayerMask.NameToLayer("Ground") && isClimbing)
+    //    if (collision.gameObject.CompareTag("Ground") && isGrounded)
     //    {
-    //        isClimbing = false;
-    //        ani.speed = 1;
-    //        ani.SetBool("isClimb", false);
+
     //    }
-            
+
     //}
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -186,14 +194,6 @@ public class PlayerController : MonoBehaviour
         {
             isClimbing = false;
             isLadder = false;
-        }
-
-        if (collision.CompareTag("Room"))
-        {
-            if (collision.gameObject == currentCamera)
-            {
-                currentCamera = null;
-            }
         }
     }
 
@@ -225,6 +225,11 @@ public class PlayerController : MonoBehaviour
         return isGrounded && moveInput != 0;
     }
 
+    public bool canAttack()
+    {
+        return rb.velocity.y == 0f;
+    }
+
     public bool IsMove()
     {
         return rb.velocity.x != 0 || rb.velocity.y!=0;
@@ -235,15 +240,20 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(value1, value2);
     }
 
+    public void SetGravetiScale(float _value)
+    {
+        rb.gravityScale = _value;
+    }
+
     public bool canChangeCamera()
     {
-        return ( isClimbing || (!isLadder && (rb.velocity.y == 0|| isGrounded||coyoteCounter>=0)) );
+        return !(!isClimbing && isLadder);
     }
 
     private void updateAnimations()
     {   
         // animaition running
-        if (rb.velocity.x!=0 && isGrounded )
+        if (rb.velocity.x!=0 && isGrounded && moveInput!=0)
         {
             ani.SetBool("isRunning", true);
 
@@ -254,7 +264,7 @@ public class PlayerController : MonoBehaviour
 
         }
         //Animation jumping
-        if (rb.velocity.y !=0)
+        if (rb.velocity.y !=0 && !isGrounded)
         {
             ani.SetBool("isJump", true);
         }

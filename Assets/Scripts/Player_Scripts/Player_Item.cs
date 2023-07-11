@@ -8,16 +8,17 @@ public class Player_Item : MonoBehaviour
     [SerializeField] private int playerBullet;
     [SerializeField] private int maxBullet;
     //public float startingBullet;
-    private int power;
+    private int curentPower;
     [SerializeField] private int maxPower;
 
-    [SerializeField]private string currentCard;
-
+    private string currentCard;
+    [SerializeField] private AudioClip pickUPSound;
     private void Awake()
     {
         playerBullet = 0;
-        power = 0;
+        curentPower = 0;
         currentCard= null;
+        playerBullet = 0;
     }
 
     public void addBullet(int _value)
@@ -37,12 +38,17 @@ public class Player_Item : MonoBehaviour
 
     public void AddPower(int _value)
     {
-        power = Mathf.Clamp(power + _value, 0, maxPower);
+        curentPower = Mathf.Clamp(curentPower + _value, 0, maxPower);
     }
 
     public int GetPower()
     {
-        return power;
+        return curentPower;
+    }
+
+    public int GetMaxPower()
+    {
+        return maxPower;
     }
 
     public string GetColorCurrentCard()
@@ -59,28 +65,32 @@ public class Player_Item : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        
         if (collision.gameObject.CompareTag("Heart"))
         {
             collision.gameObject.SetActive(false);
             gameObject.GetComponent<Player_health>().addHealth(1);
+            SoundManager.instance.PlaySound(pickUPSound);
         }
 
         if (collision.gameObject.CompareTag("Gun"))
         {
+            addBullet(collision.gameObject.GetComponent<Addbullet>().GetBullet());
             collision.gameObject.SetActive(false);
-            Debug.Log("ok");
-            addBullet(1);
+            SoundManager.instance.PlaySound(pickUPSound);
         }
 
         if (collision.gameObject.CompareTag("Power"))
         {
             collision.gameObject.SetActive(false);
             AddPower(1);
+            SoundManager.instance.PlaySound(pickUPSound);
         }
 
         if (collision.gameObject.CompareTag("Card"))
         {
             currentCard = collision.gameObject.GetComponent<Card>().GetColorCard();
+            SoundManager.instance.PlaySound(pickUPSound);
             //collision.gameObject.SetActive(false);
         }
     }

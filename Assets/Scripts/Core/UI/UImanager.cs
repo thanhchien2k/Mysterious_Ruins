@@ -1,23 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Serialization;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 
 
 public class UImanager : MonoBehaviour
 {
     [SerializeReference] private GameObject gameOverScreen;
     [SerializeReference] private GameObject pauseScreen;
+    [SerializeReference] private GameObject pauseScreenDialog;
+    [SerializeReference] private GameObject overScreenDialog;
+
     [SerializeReference] private PlayerController playerControl;
 
     private void Awake()
     {
         gameOverScreen.SetActive(false);
         pauseScreen.SetActive(false);
+        Time.timeScale = 1;
     }
-
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.P))
@@ -26,7 +27,7 @@ public class UImanager : MonoBehaviour
             else PauseGame(true);
         }
 
-        if (pauseScreen.activeInHierarchy)
+        if (pauseScreen.activeInHierarchy || pauseScreenDialog.activeInHierarchy || gameOverScreen.activeInHierarchy || overScreenDialog.activeInHierarchy)
         {
             Time.timeScale = 0;
             if (playerControl != null)
@@ -34,14 +35,14 @@ public class UImanager : MonoBehaviour
                 playerControl.enabled = false;
             }
         }
-        else
-        {
-            Time.timeScale = 1;
-            if (playerControl != null)
-            {
-                playerControl.enabled = true;
-            }
-        }
+        //else
+        //{
+        //    Time.timeScale = 1;
+        //    if (playerControl != null)
+        //    {
+        //        playerControl.enabled = true;
+        //    }
+        //}
     }
     #region GameOver
     public void GameOver()
@@ -51,11 +52,11 @@ public class UImanager : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GameManager.instance.RestartLevel();
     }
     public void MainMenu()
     {
-        SceneManager.LoadScene(0);
+        GameManager.instance.LoadScene(0);
     }
     public void Quit()
     {

@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy_follow : MonoBehaviour
@@ -18,7 +16,8 @@ public class Enemy_follow : MonoBehaviour
 
     public GameObject Camlimited;
     [SerializeField] GameObject defaultPosition;
-    public PlayerController playerController;
+    [SerializeField] private PlayerController playerController;
+    [SerializeField]Enemy_Moving enemyMoving;
 
     private Animator ani;
 
@@ -35,6 +34,8 @@ public class Enemy_follow : MonoBehaviour
     {   float distanceFromPlayer = Vector2.Distance(defaultPosition.transform.position,player.position);
         if (Camlimited.activeSelf && distanceFromPlayer<lineOfSize)
         {
+            transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+            enemyMoving.SetIsMove(false);
             flip();
 
             if ((player.localScale.x==this.transform.localScale.x || playerController.IsMove()) && isChasing ) {
@@ -46,15 +47,20 @@ public class Enemy_follow : MonoBehaviour
                 enemyStop();
             }
 
-
         }
         else
-        {
-            if (transform.position != player.position)
+        { 
+                if(transform.position.y != defaultPosition.transform.position.y)
             {
-                moveToDefaultPoint();
+                MoveToDefaultPoint();
             }
 
+            else
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+                enemyMoving.SetIsMove(true);
+            }
+                
         }
 
 
@@ -143,12 +149,12 @@ public class Enemy_follow : MonoBehaviour
         }
     }
 
-    private void moveToDefaultPoint()
+    private void MoveToDefaultPoint()
     {
         ani.SetBool("isFury", false);
         ani.SetBool("isShocked", false);
 
-        transform.position = Vector2.MoveTowards(this.transform.position, defaultPosition.transform.position, speed * Time.deltaTime);
+        transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
         Vector3 localScale = transform.localScale;
 
         if (this.transform.position.x - defaultPosition.transform.position.x > 0)
@@ -162,6 +168,9 @@ public class Enemy_follow : MonoBehaviour
             localScale.x = -1;
         }
         transform.localScale = localScale;
+
+        transform.position = Vector2.MoveTowards(this.transform.position, defaultPosition.transform.position, speed * Time.deltaTime);
+
     }
     private void OnDrawGizmosSelected()
     {

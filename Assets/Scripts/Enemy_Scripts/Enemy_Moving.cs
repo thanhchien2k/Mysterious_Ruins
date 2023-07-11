@@ -9,6 +9,7 @@ public class Enemy_Moving : MonoBehaviour
     [SerializeField] private GameObject ways;
     [SerializeField] private bool isMove;
     [SerializeField] private bool isSmile;
+    [SerializeField] private bool isLizard;
     private Animator ani;
     private Transform[] WayPoints;
     
@@ -34,13 +35,18 @@ public class Enemy_Moving : MonoBehaviour
         pointIndex = 1;
         targetPos = WayPoints[pointIndex].transform.position;
         ani = GetComponent<Animator>();
-        ani.SetBool("run", isMove);
+        ani.SetBool("run", true);
     }
 
     // Update is called once per frame
     private void Update()
     {
         if (isMove) EnemyMove();
+        else
+        {
+            pointIndex = 1;
+            targetPos = WayPoints[pointIndex].transform.position;
+        }
     }
 
     private void EnemyMove()
@@ -60,34 +66,52 @@ public class Enemy_Moving : MonoBehaviour
         pointIndex += direction;
         targetPos = WayPoints[pointIndex].transform.position;
         StartCoroutine(WaitNextPoint());
-        if (isSmile) SmoothMove();
+        SmoothMove();
 
     }
 
     IEnumerator WaitNextPoint()
     {
         speedMultiplier = 0;
-        ani.SetBool("run", false);
+        if(!isLizard) ani.SetBool("run", false);
         yield return new WaitForSeconds(waitDuration);
         speedMultiplier = 1;
-        ani.SetBool("run", true);
+        if (!isLizard) ani.SetBool("run", true);
         transform.localRotation = WayPoints[pointIndex].transform.localRotation;
     }
 
     private void SmoothMove()
     {
+        if (isSmile) {
+            if (transform.position.x == WayPoints[pointIndex].transform.position.x)
+            {
+                if (transform.position.y > WayPoints[pointIndex].transform.position.y)
+                    transform.position = new Vector2(transform.position.x, transform.position.y - 0.7f);
+                else transform.position = new Vector2(transform.position.x, transform.position.y + 0.7f);
+            }
+            else
+            {
+                if (transform.position.x > WayPoints[pointIndex].transform.position.x)
+                    transform.position = new Vector2(transform.position.x - 0.7f, transform.position.y);
+                else transform.position = new Vector2(transform.position.x + 0.7f, transform.position.y);
+            }
+        }
+        else if(isLizard)
+        { 
+            if(pointIndex==2|| pointIndex==3 ||pointIndex==6||pointIndex == 7)
+            {
+                ani.SetBool("run", false);
+            }
+            else
+            {
+                ani.SetBool("run", true);
+            }
+        }
 
-        if (transform.position.x == WayPoints[pointIndex].transform.position.x)
-        {
-            if (transform.position.y > WayPoints[pointIndex].transform.position.y)
-                transform.position = new Vector2(transform.position.x, transform.position.y - 0.7f);
-            else transform.position = new Vector2(transform.position.x, transform.position.y + 0.7f);
-        }
-        else
-        {
-            if (transform.position.x > WayPoints[pointIndex].transform.position.x)
-                transform.position = new Vector2(transform.position.x - 0.7f, transform.position.y);
-            else transform.position = new Vector2(transform.position.x + 0.7f, transform.position.y);
-        }
+    }
+    
+    public void SetIsMove(bool _value)
+    {
+        isMove = _value;
     }
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3080913994678296393}
   - component: {fileID: 3080913994678296392}
   - component: {fileID: 3080913994678296391}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: Multi_spike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,3 +161,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delaySpikeTime: 1
+  isMove: 1

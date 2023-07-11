@@ -7,8 +7,8 @@ public class Player_Respawn : MonoBehaviour
 {
     private Transform currentRespawnPoint;
     private Player_health playerHealth;
-    private PlayerController playercontroller;
-    private bool  isDeep;
+    private bool isDeep;
+   
     // Start is called before the first frame update
     private void Awake()
     {
@@ -24,7 +24,6 @@ public class Player_Respawn : MonoBehaviour
         transform.position = currentRespawnPoint.position;
         transform.localScale = currentRespawnPoint.localScale;
         playerHealth.IsRespawn();
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -42,17 +41,21 @@ public class Player_Respawn : MonoBehaviour
 
     private IEnumerator isDeeping()
     {
+        PlayerController player = GetComponent<PlayerController>();
 
-        if (GetComponent<PlayerController>() != null)
+        if (player != null)
         {
-            playercontroller = GetComponent<PlayerController>();
-            playercontroller.SetMoving(0, 0);
-            playercontroller.enabled = false;
+            
+            player.SetMoving(0, 0);
+            player.enabled = false;
         }
-        yield return new WaitForSeconds(1f);
-            playercontroller.enabled = true;
 
+        yield return new WaitForSeconds(0.8f);
+
+        if (player != null)
+        {
+            player.enabled = true;
+        }
 
     }
-
 }

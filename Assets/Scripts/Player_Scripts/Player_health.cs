@@ -10,13 +10,17 @@ public class Player_health : MonoBehaviour
     private bool dead;
     private UImanager uiManager;
 
-
     [Header("invulnerability")]
     [SerializeField] private float iFrameDuration;
     [SerializeField] private float numberOfFlashes;
     private SpriteRenderer SP;
     private bool invulnerable;
     [SerializeField] private Behaviour[] component;
+
+    [Header ("Sound")] 
+    [SerializeField]private AudioClip deadthSound;
+    [SerializeField]private AudioClip hurtSound;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -33,29 +37,22 @@ public class Player_health : MonoBehaviour
         if (currentHeath > 0)
         {
             ani.SetTrigger("isHurt");
+            SoundManager.instance.PlaySound(hurtSound);
             StartCoroutine(invulnerability());
+
         }
         else
         {
             if (!dead)
 
             {
-                if (GetComponent<PlayerController>() != null)
-                {
-                    GetComponent<PlayerController>().enabled = false;
-                }
-
-                if (GetComponent<PlayerAttack>() != null)
-                {
-                    GetComponent<PlayerAttack>().enabled = false;
-                }
-
-
                 foreach (Behaviour comp in component)
                 {
                     comp.enabled = false;
                 }
                 dead = true;
+
+                SoundManager.instance.PlaySound(deadthSound);
 
                 uiManager.GameOver();
 
@@ -76,10 +73,8 @@ public class Player_health : MonoBehaviour
 
     public void IsRespawn()
     { 
-        //ani.Play("player-idle");
         ani.SetBool("isJump", false);
         ani.SetBool("isRunning", false);
-        StartCoroutine(invulnerability());
     }
 
 
