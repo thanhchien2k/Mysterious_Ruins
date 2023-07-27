@@ -62,6 +62,11 @@ public class UImanager : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void NextLevel()
+    {
+        GameManager.instance.NextLevel();
+    }
     #endregion
 
     #region GamePause
@@ -95,5 +100,6 @@ public class UImanager : MonoBehaviour
         SoundManager.instance.ChangeMusicVolume(0.2f);
     }
     #endregion
+
 
 }

@@ -9,6 +9,7 @@ public class Ground_Hidden : MonoBehaviour
     private Animator ani;
     [SerializeField] private float delayTime;
     [SerializeField]private bool delayMode;
+    bool isHover;
     private void Awake()
     {
         ani = GetComponent<Animator>();
@@ -21,7 +22,18 @@ public class Ground_Hidden : MonoBehaviour
 
     private void Update()
     {
-        if (button.GetIsHover() && !isActive )
+        
+        if(button == null || !button.gameObject.activeSelf)
+        {
+            isHover = true;
+        }
+        else
+        {
+            isHover = button.GetIsHover();
+        }
+
+
+        if ( isHover && !isActive )
         {
             ani.speed = 1;
             isActive = true;

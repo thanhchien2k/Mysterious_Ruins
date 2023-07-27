@@ -20,7 +20,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Bullet
+  - 
   - Water
   - UI
   - Ground
@@ -31,8 +31,8 @@ TagManager:
   - Item
   - Grouncheck
   - Props
-  - 
-  - 
+  - Bullet
+  - Wall
   - 
   - 
   - 

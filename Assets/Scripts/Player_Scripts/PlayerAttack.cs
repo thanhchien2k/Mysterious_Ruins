@@ -1,24 +1,34 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
-    // Start is called before the first frame update
+
     private Animator ani;
     private PlayerController playerController;
     [SerializeField] private Transform bulletPoint;
-    [SerializeField] private GameObject [] bullets;
+    private List<GameObject> bullets;
+    [SerializeField] private GameObject bulletHolder;
+    [SerializeField] private float tempBulletLifeTime = 5f;
+    [SerializeField] private GameObject bulletPrefabs;
+    
 
     [Header("Sound")]
     [SerializeField]private AudioClip shootSound;
     private Player_Item Items;
+
     private void Awake()
     {
         ani = GetComponent<Animator>();
         playerController = GetComponent<PlayerController>();
         Items = GetComponent<Player_Item>();
+
+        bullets = new List<GameObject>();
+
+        for (int i = 0; i < bulletHolder.transform.childCount; i++)
+        {
+            bullets.Add(bulletHolder.transform.GetChild(i).gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -56,12 +66,30 @@ public class PlayerAttack : MonoBehaviour
 
     private int selectBullet()
     {
-        for(int i=0 ; i < bullets.Length; i++)
-        {
-            if (!bullets[i].activeInHierarchy)
-                return i;
+        int Counter = 0;
+        for (int i=0 ; i < bullets.Count; i++)
+        {   
+            if (!bullets[i].activeInHierarchy) return i;
+            Counter += 1;
+
+        }
+
+        if (Counter >= bullets.Count)
+        {   
+            GameObject tempBullet = Instantiate(bulletPrefabs, bulletPoint.position, Quaternion.identity, bulletHolder.transform);
+            bullets.Add(tempBullet);
+            StartCoroutine(DestroyTempBullet(tempBullet));
+            return bullets.IndexOf(tempBullet);
         }
 
         return 0;
+        
+    }
+
+    private IEnumerator DestroyTempBullet(GameObject tempBullet)
+    {
+        yield return new WaitForSeconds(tempBulletLifeTime);
+        bullets.Remove(tempBullet);
+        Destroy(tempBullet);
     }
 }

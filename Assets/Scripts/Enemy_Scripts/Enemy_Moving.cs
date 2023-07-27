@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
 
 public class Enemy_Moving : MonoBehaviour
@@ -35,18 +34,14 @@ public class Enemy_Moving : MonoBehaviour
         pointIndex = 1;
         targetPos = WayPoints[pointIndex].transform.position;
         ani = GetComponent<Animator>();
-        ani.SetBool("run", true);
+        ani.SetBool("run", isMove);
+
     }
 
     // Update is called once per frame
     private void Update()
     {
         if (isMove) EnemyMove();
-        else
-        {
-            pointIndex = 1;
-            targetPos = WayPoints[pointIndex].transform.position;
-        }
     }
 
     private void EnemyMove()
@@ -113,5 +108,11 @@ public class Enemy_Moving : MonoBehaviour
     public void SetIsMove(bool _value)
     {
         isMove = _value;
+    }
+
+    public void SetPointMoving()
+    {
+        pointIndex = 1;
+        targetPos = WayPoints[pointIndex].transform.position;
     }
 }

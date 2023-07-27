@@ -6,6 +6,7 @@ public class Teleporter : MonoBehaviour
 {
     [SerializeField] Transform destination;
     [SerializeField] private TypeColor teleporter;
+    private bool isTouch = false;
 
     public string GetTeleportColor()
     {
@@ -16,4 +17,27 @@ public class Teleporter : MonoBehaviour
     {
         return destination;
     }
+
+    public bool GetIsTouch()
+    {
+        return isTouch;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            isTouch = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            isTouch = false;
+        }
+    }
+
+
+
 }

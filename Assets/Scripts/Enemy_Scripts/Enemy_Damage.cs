@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy_Damage : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField]private float enemyDamage;
+    [SerializeField]protected float enemyDamage;
 
     public void OnTriggerEnter2D(Collider2D collision)
     {

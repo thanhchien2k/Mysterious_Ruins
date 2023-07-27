@@ -17,7 +17,7 @@ public class Enemy_follow : MonoBehaviour
     public GameObject Camlimited;
     [SerializeField] GameObject defaultPosition;
     [SerializeField] private PlayerController playerController;
-    [SerializeField]Enemy_Moving enemyMoving;
+    Enemy_Moving enemyMoving;
 
     private Animator ani;
 
@@ -26,6 +26,7 @@ public class Enemy_follow : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         ani = GetComponent<Animator>();
+        enemyMoving = gameObject.GetComponent<Enemy_Moving>();
 
     }
 
@@ -51,15 +52,15 @@ public class Enemy_follow : MonoBehaviour
         else
         { 
                 if(transform.position.y != defaultPosition.transform.position.y)
-            {
+                {
                 MoveToDefaultPoint();
-            }
-
-            else
-            {
+                enemyMoving.SetPointMoving();
+                }
+                else
+                {
                 transform.localScale = new Vector3(-1, 1, 1);
                 enemyMoving.SetIsMove(true);
-            }
+                }
                 
         }
 

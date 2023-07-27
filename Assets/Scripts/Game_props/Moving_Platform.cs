@@ -5,7 +5,10 @@ using UnityEngine;
 public class Moving_Platform : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private float waitDuration;
     [SerializeField] private GameObject ways;
+    [SerializeField] private bool isMove;
+    [SerializeField] private Button_Ground Button;
 
     private Transform[] WayPoints;
     int pointIndex,pointCount;
@@ -15,6 +18,7 @@ public class Moving_Platform : MonoBehaviour
     Rigidbody2D rb;
     Rigidbody2D playerRb;
     Vector3 moveDirection;
+    int multiSpeed =1;
 
     private void Awake()
     {
@@ -45,7 +49,13 @@ public class Moving_Platform : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = moveDirection * speed;
+        if (isMove) rb.velocity = moveDirection * speed *multiSpeed;
+        else rb.velocity = new Vector2(0f, 0f);
+        if (Button == null) return;
+        else
+        {
+            isMove = Button.GetIsHover();
+        }
     }
 
     void DirectionCalculate()
@@ -69,8 +79,16 @@ public class Moving_Platform : MonoBehaviour
         pointIndex += 1;
         targetPos = WayPoints[pointIndex].transform.position;
         DirectionCalculate();
+        StartCoroutine(WaitNextPoint());
     }
 
+    IEnumerator WaitNextPoint()
+    {
+        multiSpeed = 0;
+        yield return new WaitForSeconds(waitDuration);
+        multiSpeed = 1;
+
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

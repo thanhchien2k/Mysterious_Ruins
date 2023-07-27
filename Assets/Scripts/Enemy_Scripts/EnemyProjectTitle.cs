@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class EnemyProjectTitle : MonoBehaviour
+public class EnemyProjectTitle : Enemy_Damage
 {
     [SerializeField] private float Speed;
     [SerializeField] public bool hit;
@@ -32,11 +31,11 @@ public class EnemyProjectTitle : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D vc)
+    private new void OnTriggerEnter2D(Collider2D collision)
     {   
-        if (!vc.CompareTag("Room") && !vc.CompareTag("Enemy"))
+        if (!collision.CompareTag("Room") && !collision.CompareTag("Enemy"))
         {
-            
+            base.OnTriggerEnter2D(collision);
             hit = true;
             coll.enabled = false;
             gameObject.SetActive(false);

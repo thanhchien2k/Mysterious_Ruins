@@ -60,24 +60,25 @@ public class PlayerController : MonoBehaviour
         }
 
         isGrounded = check.groundCheck;
+
         SmoothJump();
 
         if (isGrounded)
         {
- 
-            if (rb.velocity.y>0)
-            {
-                //coyoteCounter = 0;
-            }
-            else 
-            {
-                coyoteCounter = coyoteTime;
-            }
+            coyoteCounter = coyoteTime;
+            //if (rb.velocity.y>0)
+            //{
+            //    //coyoteCounter = 0;
+            //}
+            //else 
+            //{
+            //    coyoteCounter = coyoteTime;
+            //}
 
         }
         else
         {
-                coyoteCounter -= Time.deltaTime;
+                //coyoteCounter -= Time.deltaTime;
         }
 
         if (isClimbing)
@@ -142,7 +143,7 @@ public class PlayerController : MonoBehaviour
             {
 
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                coyoteCounter = 0;
+                coyoteCounter -= 1;
                 SoundManager.instance.PlaySound(jumpSound);
             }
         }

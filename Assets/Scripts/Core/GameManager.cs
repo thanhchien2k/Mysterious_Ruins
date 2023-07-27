@@ -24,23 +24,27 @@ public class GameManager : MonoBehaviour
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SetTimeScale(1);
     }
 
     public void LoadScene(int _index)
     {
         SceneManager.LoadScene(_index);
+        SetTimeScale(1);
     }
 
     public void OpenLevel(int levelID)
     {
         string LevelName = "Level " + levelID;
         SceneManager.LoadScene(LevelName);
+        SetTimeScale(1);
     }
 
     public void NextLevel()
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
         OpenLevel(int.Parse(currentSceneName[currentSceneName.Length - 1].ToString())+1);
+        SetTimeScale(1);
     }
 
     public void UnlockLevel()
@@ -52,5 +56,19 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("UnlockedLevel", PlayerPrefs.GetInt("UnlockedLevel", 1) + 1);
             PlayerPrefs.Save();
         }
+    }
+
+    public void OpenUI(Transform _value)
+    {
+        _value.LeanScale(Vector2.one, 0.8f);
+    }
+    public void CloseUI(Transform _value)
+    {
+        _value.LeanScale(Vector2.zero, 1f).setEaseInBack();
+    }
+
+    private void SetTimeScale(int _value)
+    {
+        Time.timeScale = _value;
     }
 }

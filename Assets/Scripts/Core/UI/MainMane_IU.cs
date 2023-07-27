@@ -9,6 +9,12 @@ public class MainMane_IU : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void ResetGame()
+    {
+        PlayerPrefs.SetInt("UnlockedLevel", 1);
+        PlayerPrefs.SetInt("ReachedIndex", 1);
+    }
     public void ChangeSoundVolume()
     {
         SoundManager.instance.ChangeSoundVolume(0.2f);
