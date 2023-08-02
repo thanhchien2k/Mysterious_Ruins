@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class MainMane_IU : MonoBehaviour
+public class MainMenu_IU : MonoBehaviour
 {
     #region MenuGame
 
@@ -12,8 +12,7 @@ public class MainMane_IU : MonoBehaviour
 
     public void ResetGame()
     {
-        PlayerPrefs.SetInt("UnlockedLevel", 1);
-        PlayerPrefs.SetInt("ReachedIndex", 1);
+        GameManager.instance.ResetGame();
     }
     public void ChangeSoundVolume()
     {

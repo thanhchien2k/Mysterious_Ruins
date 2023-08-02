@@ -36,7 +36,15 @@ public class SoundManager : MonoBehaviour
     }
     public void ChangeMusicVolume(float _change)
     {
-        ChangeSourceVolume(0.3f, "musicVolume", _change, musicSource);
+        ChangeSourceVolume(0.5f, "musicVolume", _change, musicSource);
+    }
+
+    public void ResetVolume()
+    {
+        PlayerPrefs.SetFloat("soundVolume", 0);
+        PlayerPrefs.SetFloat("musicVolume", 0);
+        ChangeMusicVolume(0.4f);
+        ChangeSoundVolume(0.4f);
     }
 
     private void ChangeSourceVolume(float baseVolume, string volumeName, float change, AudioSource source)

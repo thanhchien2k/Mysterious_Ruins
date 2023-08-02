@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyProjectTitle : Enemy_Damage
+public class EnemyProjectTitle : Enemy
 {
     [SerializeField] private float Speed;
     [SerializeField] public bool hit;
-    private Animator ani;
     private BoxCollider2D coll;
     private float lifeTime;
     // Start is called before the first frame update
     void Awake()
     {
-        ani = GetComponent<Animator>();
         coll = GetComponent<BoxCollider2D>();
     }
 

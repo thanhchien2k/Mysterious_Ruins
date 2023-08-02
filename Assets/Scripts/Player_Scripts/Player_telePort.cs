@@ -14,8 +14,9 @@ public class Player_telePort : MonoBehaviour
     }
     private void Update()
     {
-        if (currentTeleport == null || !playerItems.Checkcard()) return;
-        if (Input.GetKeyDown(KeyCode.UpArrow) && (currentTeleport.GetComponent<Teleporter>().GetTeleportColor() == playerItems.GetColorCurrentCard()) )
+        if (currentTeleport == null) return;
+        if (Input.GetKeyDown(KeyCode.UpArrow) 
+            && ( (currentTeleport.GetComponent<Teleporter>().GetTeleportColor() == playerItems.GetColorCurrentCard())|| currentTeleport.GetComponent<Teleporter>().GetTeleportColor()=="Black"))
         {
             transform.position = currentTeleport.GetComponent<Teleporter>().GetDestination().position;
         }

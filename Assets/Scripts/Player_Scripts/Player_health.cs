@@ -31,14 +31,14 @@ public class Player_health : MonoBehaviour
 
     }
 
-    public void takeDamage(float _damage)
+    public void TakeDamage(float _damage)
     {   if (invulnerable) return;
         currentHeath = Mathf.Clamp(currentHeath - _damage, 0,maxHealth);
         if (currentHeath > 0)
         {
             ani.SetTrigger("isHurt");
             SoundManager.instance.PlaySound(hurtSound);
-            StartCoroutine(invulnerability());
+            StartCoroutine(Invulnerability());
 
         }
         else
@@ -78,7 +78,7 @@ public class Player_health : MonoBehaviour
     }
 
 
-    private IEnumerator invulnerability()
+    private IEnumerator Invulnerability()
     {
         invulnerable = true;
         Physics2D.IgnoreLayerCollision(9, 10, true);

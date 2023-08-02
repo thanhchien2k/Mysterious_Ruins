@@ -7,7 +7,6 @@ public class StartHiddenUI : MonoBehaviour
     private void Start()
     {
         transform.localScale = Vector2.zero;
-        //gameObject.SetActive(false);
     }
 
 

@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     }
 
+
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -56,6 +57,14 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("UnlockedLevel", PlayerPrefs.GetInt("UnlockedLevel", 1) + 1);
             PlayerPrefs.Save();
         }
+    }
+
+    public void ResetGame()
+    {
+        PlayerPrefs.SetInt("UnlockedLevel", 1);
+        PlayerPrefs.SetInt("ReachedIndex", 1);
+        PlayerPrefs.Save();
+        SoundManager.instance.ResetVolume();
     }
 
     public void OpenUI(Transform _value)

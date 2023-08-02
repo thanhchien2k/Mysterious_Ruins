@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Enemy_shooting : MonoBehaviour
+public class Enemy_shooting : Enemy
 {
-    private Animator ani;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject[] fireBall;
     [SerializeField] private float delayShootingTime;
+    private Animator ani;
 
-    private void Awake()
+    private void Start()
     {
         ani = GetComponent<Animator>();
     }
@@ -35,6 +36,12 @@ public class Enemy_shooting : MonoBehaviour
         ani.speed = 0;
         yield return new WaitForSeconds(delayShootingTime);
         ani.speed = 1;
+    }
+
+    protected override void Die()
+    {
+        base.Die();
+        gameObject.SetActive(false);
     }
 
 

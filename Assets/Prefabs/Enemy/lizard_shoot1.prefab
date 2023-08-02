@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyDamage: 1
+  maxHealth: 1
   Speed: 6.8
   hit: 0
 --- !u!1 &3928072461640604448
@@ -375,6 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyDamage: 1
+  maxHealth: 1
   Speed: 6.8
   hit: 0
 --- !u!1 &3928072462012033524
@@ -546,6 +548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyDamage: 1
+  maxHealth: 1
   Speed: 6.8
   hit: 0
 --- !u!1 &3928072462541397326
@@ -593,8 +596,6 @@ GameObject:
   - component: {fileID: 3928072463023397571}
   - component: {fileID: 3928072463023397581}
   - component: {fileID: 3928072463023397582}
-  - component: {fileID: 3928072463023397569}
-  - component: {fileID: 3928072463023397570}
   - component: {fileID: 3928072463023397579}
   - component: {fileID: 3928072463023397578}
   m_Layer: 9
@@ -692,34 +693,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3928072463023397569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3928072463023397572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab6879d4f470356418bf9a42cd2c8190, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 1
-  currentHealth: 0
-  component: []
---- !u!114 &3928072463023397570
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3928072463023397572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a39e3482949f833468f918d13db8eeb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyDamage: 1
 --- !u!70 &3928072463023397579
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -748,6 +721,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d294dcf5891f8c74cadba8b556c4ba39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyDamage: 1
+  maxHealth: 1
   firePoint: {fileID: 3928072463483352885}
   fireBall:
   - {fileID: 3928072462012033524}
@@ -924,6 +899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyDamage: 1
+  maxHealth: 1
   Speed: 6.8
   hit: 0
 --- !u!1 &3928072463483352886

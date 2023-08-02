@@ -36,7 +36,7 @@ public class ProjectTitle : MonoBehaviour
         {
             if (vc.CompareTag("Enemy"))
             {
-                vc.gameObject.GetComponent<Enemy_Health>().takeDamage(1);
+                vc.gameObject.GetComponent<Enemy>().TakeDamage(1);
             }
             //Debug.Log(vc.gameObject.layer);
             hit = true;

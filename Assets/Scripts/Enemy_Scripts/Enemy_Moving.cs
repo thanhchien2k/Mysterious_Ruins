@@ -1,21 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Enemy_Moving : MonoBehaviour
+public class Enemy_Moving : Enemy
 {
     [SerializeField] private float speed;
     [SerializeField] private GameObject ways;
     [SerializeField] private bool isMove;
     [SerializeField] private bool isSmile;
     [SerializeField] private bool isLizard;
-    private Animator ani;
     private Transform[] WayPoints;
+    private Animator ani;
     
     Vector3 targetPos;
     int pointIndex;
     int pointCount;
-    int direction = 1;
     public float waitDuration;
     int speedMultiplier = 1;
 
@@ -25,17 +25,15 @@ public class Enemy_Moving : MonoBehaviour
         for(int i=0; i< ways.transform.childCount; i++)
         {
             WayPoints[i] = ways.transform.GetChild(i).gameObject.transform;
-        }
+        } 
     }
-
     private void Start()
-    {
+    {   
         pointCount = WayPoints.Length -1 ;
         pointIndex = 1;
         targetPos = WayPoints[pointIndex].transform.position;
         ani = GetComponent<Animator>();
         ani.SetBool("run", isMove);
-
     }
 
     // Update is called once per frame
@@ -58,11 +56,10 @@ public class Enemy_Moving : MonoBehaviour
     {
         if (pointIndex == pointCount) pointIndex=-1;
         
-        pointIndex += direction;
+        pointIndex += 1;
         targetPos = WayPoints[pointIndex].transform.position;
         StartCoroutine(WaitNextPoint());
         SmoothMove();
-
     }
 
     IEnumerator WaitNextPoint()
@@ -114,5 +111,11 @@ public class Enemy_Moving : MonoBehaviour
     {
         pointIndex = 1;
         targetPos = WayPoints[pointIndex].transform.position;
+    }
+
+    protected override void Die()
+    {
+        base.Die();
+        gameObject.SetActive(false);
     }
 }

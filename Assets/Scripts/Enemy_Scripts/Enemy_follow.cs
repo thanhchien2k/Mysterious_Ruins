@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Enemy_follow : MonoBehaviour
+public class Enemy_follow : Enemy
 {
     private Transform player;
 
@@ -18,15 +19,16 @@ public class Enemy_follow : MonoBehaviour
     [SerializeField] GameObject defaultPosition;
     [SerializeField] private PlayerController playerController;
     Enemy_Moving enemyMoving;
-
     private Animator ani;
 
 
-    void Start()
+
+
+    private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        ani = GetComponent<Animator>();
         enemyMoving = gameObject.GetComponent<Enemy_Moving>();
+        ani = GetComponent<Animator>();
 
     }
 
@@ -177,6 +179,12 @@ public class Enemy_follow : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(defaultPosition.transform.position, lineOfSize);
+    }
+
+    protected override void Die()
+    {
+        base.Die();
+        gameObject.SetActive(false);
     }
 
 }
