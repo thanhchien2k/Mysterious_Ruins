@@ -11,17 +11,18 @@ public class UImanager : MonoBehaviour
     [SerializeReference] private GameObject pauseScreenDialog;
     [SerializeReference] private GameObject overScreenDialog;
 
-    [SerializeReference] private PlayerController playerControl;
+    private PlayerController playerControl;
 
     private void Awake()
     {
         gameOverScreen.SetActive(false);
         pauseScreen.SetActive(false);
         Time.timeScale = 1;
+        playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P))
+        if(Input.GetKeyDown(KeyCode.P) && playerControl.enabled==true)
         {
             if (pauseScreen.activeInHierarchy) PauseGame(false);
             else PauseGame(true);

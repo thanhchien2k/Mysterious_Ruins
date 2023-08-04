@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Card_color : MonoBehaviour
+public class Level2_box : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

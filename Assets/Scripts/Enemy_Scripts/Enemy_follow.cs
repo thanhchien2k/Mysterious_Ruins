@@ -17,7 +17,7 @@ public class Enemy_follow : Enemy
 
     public GameObject Camlimited;
     [SerializeField] GameObject defaultPosition;
-    [SerializeField] private PlayerController playerController;
+    private PlayerController playerController;
     Enemy_Moving enemyMoving;
     private Animator ani;
 
@@ -27,6 +27,7 @@ public class Enemy_follow : Enemy
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         enemyMoving = gameObject.GetComponent<Enemy_Moving>();
         ani = GetComponent<Animator>();
 

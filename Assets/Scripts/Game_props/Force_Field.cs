@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Force_Field : MonoBehaviour
 {
-    [SerializeField] private Player_Item playerItem;
+    private Player_Item playerItem;
     [SerializeField] private GameObject computer;
+    private void Start()
+    {
+        playerItem = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Item>();
+    }
     void Update()
     {
         if (playerItem.GetPower() == playerItem.GetMaxPower() && DialogueManager.isMessageActive

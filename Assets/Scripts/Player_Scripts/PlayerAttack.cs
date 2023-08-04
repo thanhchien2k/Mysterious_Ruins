@@ -9,7 +9,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Transform bulletPoint;
     private List<GameObject> bullets;
     [SerializeField] private GameObject bulletHolder;
-    [SerializeField] private float tempBulletLifeTime = 5f;
+    private float tempBulletLifeTime = 5f;
     [SerializeField] private GameObject bulletPrefabs;
     
 

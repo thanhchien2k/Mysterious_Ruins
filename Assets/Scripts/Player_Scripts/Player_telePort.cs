@@ -6,7 +6,6 @@ public class Player_telePort : MonoBehaviour
 {
     private GameObject currentTeleport;
     private Player_Item playerItems;
-    private bool isTeleport;
 
     private void Awake()
     {

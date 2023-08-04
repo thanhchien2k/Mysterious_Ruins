@@ -9,10 +9,11 @@ public class Text_Item : MonoBehaviour
     [SerializeField] private string nameItems;
     private Text txt;
     private Image img;
-    [SerializeField] private Player_Item playerItems;
+    private Player_Item playerItems;
     [SerializeField]private Sprite[] CardImage;
     private void Awake()
     {
+        playerItems = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Item>();
         txt = GetComponent<Text>();
         img = GetComponent<Image>();
     }

@@ -16,6 +16,7 @@ TagManager:
   - RespawnPoint
   - TelePort
   - Card
+  - CheckPoint
   layers:
   - Default
   - TransparentFX

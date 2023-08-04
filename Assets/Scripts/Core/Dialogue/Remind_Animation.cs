@@ -11,8 +11,4 @@ public class Remind_Animation : MonoBehaviour
         LeanTween.alpha(gameObject, 0f, 0.5f).setLoopPingPong();
     }
 
-    private void FixedUpdate()
-    {
-        
-    }
 }

@@ -5,10 +5,15 @@ using UnityEngine;
 public class Ladder : MonoBehaviour
 {
     [SerializeField] private BoxCollider2D coll;
-    [SerializeField] private PlayerController player;
+    private PlayerController playerControll;
+
+    private void Awake()
+    {
+        playerControll = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+    }
     private void Update()
     {
-        if (player.IsClimbing)
+        if (playerControll.IsClimbing)
         {
             coll.enabled = false;
            

@@ -1,17 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public class Camera_room : MonoBehaviour
 {
     [SerializeField] private GameObject virtualCam;
-    [SerializeField] private PlayerController playerController;
+    private PlayerController playerController;
+    [SerializeField] private List<GameObject> objects;
+
+    private void Awake()
+    {
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        foreach (GameObject temp in objects)
+        {
+            temp.SetActive(false);
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Player") && !collision.isTrigger && playerController.canChangeCamera())
         {
             virtualCam.SetActive(true);
+
+
+
+            foreach (GameObject temp in objects)
+            {
+                temp.SetActive(true);
+            }
         }
     }
 
@@ -20,6 +38,11 @@ public class Camera_room : MonoBehaviour
         if (collision.CompareTag("Player") && !collision.isTrigger && playerController.canChangeCamera())
         {
             virtualCam.SetActive(false);
+
+            foreach (GameObject temp in objects)
+            {
+                temp.SetActive(false);
+            }
         }
     }
     

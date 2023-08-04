@@ -5,8 +5,11 @@ using UnityEngine;
 public class Player_Respawn : MonoBehaviour
 {
     private Transform currentRespawnPoint;
+    private Transform currentCheckPoint;
     private Player_health playerHealth;
     private bool isDeep;
+    private float healthRespawn;
+    [SerializeField] AudioClip CheckPointAppear;
    
     // Start is called before the first frame update
     private void Awake()
@@ -17,12 +20,23 @@ public class Player_Respawn : MonoBehaviour
     // Update is called once per frame
     public void Respawn()
     {
-        if (!isDeep) return;
-        isDeep = false;
-        StartCoroutine(isDeeping());
-        transform.position = currentRespawnPoint.position;
-        transform.localScale = currentRespawnPoint.localScale;
-        playerHealth.IsRespawn();
+       
+        if (isDeep && playerHealth.GetCurrentHealth()>=1)
+        {
+            isDeep = false;
+            StartCoroutine(Respawning());
+            transform.position = currentRespawnPoint.position;
+            transform.localScale = currentRespawnPoint.localScale;
+            playerHealth.IsRespawn(); 
+        } 
+        else if(playerHealth.GetCurrentHealth() <= 0)
+        {
+            StartCoroutine(Respawning());
+            transform.position = currentCheckPoint.position;
+            transform.localScale = currentCheckPoint.localScale;
+            playerHealth.addHealth(healthRespawn);
+            playerHealth.IsRespawnCheckPoint();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -36,9 +50,18 @@ public class Player_Respawn : MonoBehaviour
         {
             isDeep = true;
         }
+
+        if (collision.transform.CompareTag("CheckPoint"))
+        {
+            currentCheckPoint = collision.transform;
+            healthRespawn = playerHealth.GetCurrentHealth();
+            SoundManager.instance.PlaySound(CheckPointAppear);
+            collision.GetComponent<Collider2D>().enabled = false;
+            collision.GetComponent<Animator>().SetTrigger("Appear");
+        }
     }
 
-    private IEnumerator isDeeping()
+    private IEnumerator Respawning()
     {
         PlayerController player = GetComponent<PlayerController>();
 
@@ -57,4 +80,10 @@ public class Player_Respawn : MonoBehaviour
         }
 
     }
+
+    public bool CanRespawnCheckPoint()
+    {
+        return currentCheckPoint != null;
+    }
+
 }

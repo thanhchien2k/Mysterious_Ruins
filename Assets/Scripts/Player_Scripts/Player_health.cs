@@ -20,6 +20,7 @@ public class Player_health : MonoBehaviour
     [Header ("Sound")] 
     [SerializeField]private AudioClip deadthSound;
     [SerializeField]private AudioClip hurtSound;
+    private Player_Respawn playerRespawn;
 
     // Start is called before the first frame update
     private void Awake()
@@ -28,6 +29,7 @@ public class Player_health : MonoBehaviour
         SP = GetComponent<SpriteRenderer>();
         ani = GetComponent<Animator>();
         uiManager = FindObjectOfType<UImanager>();
+        playerRespawn = GetComponent<Player_Respawn>();
 
     }
 
@@ -41,15 +43,22 @@ public class Player_health : MonoBehaviour
             StartCoroutine(Invulnerability());
 
         }
-        else
+        else 
         {
-            if (!dead)
+            if (playerRespawn.CanRespawnCheckPoint()) 
+            {
+                ani.SetTrigger("isHurt");
+                SoundManager.instance.PlaySound(hurtSound);
+                StartCoroutine(Invulnerability());
+            }
+            else if (!dead)
 
             {
                 foreach (Behaviour comp in component)
                 {
                     comp.enabled = false;
                 }
+
                 dead = true;
 
                 SoundManager.instance.PlaySound(deadthSound);
@@ -75,6 +84,13 @@ public class Player_health : MonoBehaviour
     { 
         ani.SetBool("isJump", false);
         ani.SetBool("isRunning", false);
+    }
+
+    public void IsRespawnCheckPoint()
+    {
+        ani.SetBool("isJump", false);
+        ani.SetBool("isRunning", false);
+        dead = false;
     }
 
 

@@ -12,7 +12,7 @@ public class Enemy_Moving : Enemy
     [SerializeField] private bool isLizard;
     private Transform[] WayPoints;
     private Animator ani;
-    
+
     Vector3 targetPos;
     int pointIndex;
     int pointCount;
@@ -22,10 +22,16 @@ public class Enemy_Moving : Enemy
     private void Awake()
     {
         WayPoints = new Transform[ways.transform.childCount];
-        for(int i=0; i< ways.transform.childCount; i++)
+        for (int i = 0; i < ways.transform.childCount; i++)
         {
             WayPoints[i] = ways.transform.GetChild(i).gameObject.transform;
-        } 
+        }
+    }
+
+    private void OnEnable()
+    {
+        ani = GetComponent<Animator>();
+        ani.SetBool("run", true);
     }
     private void Start()
     {   

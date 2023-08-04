@@ -5,11 +5,12 @@ using UnityEngine;
 public class Dialog_Option : MonoBehaviour
 {
     private DialogueTrigger dialogue;
-    [SerializeField] private Player_Item playerItem;
+    private Player_Item playerItem;
     public OptionDialogue option1;
     public OptionDialogue option2;
     private void Start()
     {
+        playerItem = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Item>();
         dialogue = GetComponent<DialogueTrigger>();
         dialogue.messages = option1.message;
         dialogue.actors = option1.actor;
