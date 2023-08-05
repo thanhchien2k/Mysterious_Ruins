@@ -20,12 +20,12 @@ public class Player_Item : MonoBehaviour
         playerBullet = 0;
     }
 
-    public void addBullet(int _value)
+    public void AddBullet(int _value)
     {
         playerBullet =Mathf.Clamp(playerBullet + _value, 0, maxBullet);
     }
 
-    public void subBullet(int _value)
+    public void SubBullet(int _value)
     {
         playerBullet = Mathf.Clamp(playerBullet - _value, 0, maxBullet);
     }
@@ -68,13 +68,13 @@ public class Player_Item : MonoBehaviour
         if (collision.gameObject.CompareTag("Heart"))
         {
             collision.gameObject.SetActive(false);
-            gameObject.GetComponent<Player_health>().addHealth(1);
+            gameObject.GetComponent<Player_health>().AddHealth(1);
             SoundManager.instance.PlaySound(pickUPSound);
         }
 
         if (collision.gameObject.CompareTag("Gun"))
         {
-            addBullet(collision.gameObject.GetComponent<Addbullet>().GetBullet());
+            AddBullet(collision.gameObject.GetComponent<Addbullet>().GetBullet());
             collision.gameObject.SetActive(false);
             SoundManager.instance.PlaySound(pickUPSound);
         }

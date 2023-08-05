@@ -43,7 +43,7 @@ public class Moving_Platform : MonoBehaviour
 
     private void Update()
     {
-        platformMove();
+        PlatformMove();
 
     }
 
@@ -63,7 +63,7 @@ public class Moving_Platform : MonoBehaviour
         moveDirection = (targetPos - transform.position).normalized;
     }
 
-    private void platformMove()
+    private void PlatformMove()
     {
         if (Vector2.Distance(transform.position,targetPos)<0.05f)
         {

@@ -7,11 +7,13 @@ public class Level1_box : MonoBehaviour
     [SerializeField] private Transform levelCompleteScreen;
     private bool isNextLevelBox ;
     private PlayerController playerControll;
+    private PlayerAttack playerAttack;
 
     private void Start()
     {
         isNextLevelBox = false;
         playerControll = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        playerAttack = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttack>();
     }
 
     private void Update()
@@ -20,7 +22,12 @@ public class Level1_box : MonoBehaviour
         {
             GameManager.instance.UnlockLevel();
             GameManager.instance.OpenUI(levelCompleteScreen);
-            if (playerControll != null) playerControll.enabled = false;
+            if (playerControll != null || playerAttack!= null) 
+            {
+                playerControll.enabled = false;
+                playerAttack.enabled = false;
+            }
+           
         }
     }
 

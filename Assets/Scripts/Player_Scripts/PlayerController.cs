@@ -120,11 +120,11 @@ public class PlayerController : MonoBehaviour
         if (moveInput != 0) {
             if(moveInput >0)
             {
-                playerFlip(1);
+                PlayerFlip(1);
             }
             else
             {
-                playerFlip(-1);
+                PlayerFlip(-1);
             }
         }
 
@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour
 
 
         // update animation cho player
-        updateAnimations();
+        UpdateAnimations();
 
     }
 
@@ -215,18 +215,18 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void playerFlip(float scale)
+    private void PlayerFlip(float scale)
     {
          
         transform.localScale = new(scale, 1, 1);
     }
 
-    public bool canRunAttack()
+    public bool CanRunAttack()
     {
         return isGrounded && moveInput != 0;
     }
 
-    public bool canAttack()
+    public bool CanAttack()
     {
         return rb.velocity.y == 0f;
     }
@@ -246,12 +246,12 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = _value;
     }
 
-    public bool canChangeCamera()
+    public bool CanChangeCamera()
     {
         return !(!isClimbing && isLadder);
     }
 
-    private void updateAnimations()
+    private void UpdateAnimations()
     {   
         // animaition running
         if (rb.velocity.x!=0 && isGrounded && moveInput!=0)

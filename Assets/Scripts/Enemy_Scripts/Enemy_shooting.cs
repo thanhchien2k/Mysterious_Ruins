@@ -14,7 +14,7 @@ public class Enemy_shooting : Enemy
     {
         ani = GetComponent<Animator>();
     }
-    private void enemyShooting()
+    private void EnemyShooting()
     {
             fireBall[selectFireBall()].transform.position = firePoint.transform.position;
             fireBall[selectFireBall()].GetComponent<EnemyProjectTitle>().SetProjectTitleActive();

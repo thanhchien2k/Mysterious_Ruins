@@ -70,7 +70,7 @@ public class Player_health : MonoBehaviour
         }
     }
 
-    public void addHealth(float _value)
+    public void AddHealth(float _value)
     {
         currentHeath = Mathf.Clamp(currentHeath + _value, 0, maxHealth);
     }

@@ -34,16 +34,16 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && playerController.canRunAttack() && Items.GetBullet()>0 )
+        if (Input.GetKeyDown(KeyCode.F) && playerController.CanRunAttack() && Items.GetBullet()>0 )
         {
-            runAttack();
-            Items.subBullet(1);
+            RunAttack();
+            Items.SubBullet(1);
             
         }
-        else if(Input.GetKeyDown(KeyCode.F) && playerController.canAttack() && Items.GetBullet() > 0)
+        else if(Input.GetKeyDown(KeyCode.F) && playerController.CanAttack() && Items.GetBullet() > 0)
         {
             Attack();
-            Items.subBullet(1);
+            Items.SubBullet(1);
         }
     }
 
@@ -52,19 +52,19 @@ public class PlayerAttack : MonoBehaviour
         SoundManager.instance.PlaySound(shootSound);
         ani.SetTrigger("attack");
         //pooling bullet
-        bullets[selectBullet()].transform.position = bulletPoint.position;
-        bullets[selectBullet()].GetComponent<ProjectTitle>().SetDirection(Mathf.Sign(transform.localScale.x));
+        bullets[SelectBullet()].transform.position = bulletPoint.position;
+        bullets[SelectBullet()].GetComponent<ProjectTitle>().SetDirection(Mathf.Sign(transform.localScale.x));
     }
 
-    private void runAttack()
+    private void RunAttack()
     {
         SoundManager.instance.PlaySound(shootSound);
         ani.SetTrigger("runAttack");
-        bullets[selectBullet()].transform.position = bulletPoint.position;
-        bullets[selectBullet()].GetComponent<ProjectTitle>().SetDirection(Mathf.Sign(transform.localScale.x));
+        bullets[SelectBullet()].transform.position = bulletPoint.position;
+        bullets[SelectBullet()].GetComponent<ProjectTitle>().SetDirection(Mathf.Sign(transform.localScale.x));
     }
 
-    private int selectBullet()
+    private int SelectBullet()
     {
         int Counter = 0;
         for (int i=0 ; i < bullets.Count; i++)

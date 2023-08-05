@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class StartHiddenUI : MonoBehaviour
@@ -18,5 +19,6 @@ public class StartHiddenUI : MonoBehaviour
     {
         transform.LeanScale(Vector2.zero, 1f).setEaseInBack();
     }
+
 
 }

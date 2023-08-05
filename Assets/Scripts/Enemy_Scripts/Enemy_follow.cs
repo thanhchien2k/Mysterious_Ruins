@@ -40,15 +40,15 @@ public class Enemy_follow : Enemy
         {
             transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
             enemyMoving.SetIsMove(false);
-            flip();
+            Flip();
 
             if ((player.localScale.x==this.transform.localScale.x || playerController.IsMove()) && isChasing ) {
-                enemyFollowing();
+                EnemyFollowing();
                 canShocked = true;
             }
             else
             {
-                enemyStop();
+                EnemyStop();
             }
 
         }
@@ -69,7 +69,7 @@ public class Enemy_follow : Enemy
 
 
     }
-    private void flip()
+    private void Flip()
     {
         Vector3 localScale = transform.localScale;
         
@@ -88,7 +88,7 @@ public class Enemy_follow : Enemy
         transform.localScale = localScale;
 
     }
-    private void enemyFollowing()
+    private void EnemyFollowing()
     {
         ani.SetBool("isFury",true);
         Vector2 followPosition = player.position ;
@@ -120,7 +120,7 @@ public class Enemy_follow : Enemy
 
     }
 
-    private void enemyStop()
+    private void EnemyStop()
     {
 
         if (canShocked)

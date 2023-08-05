@@ -34,7 +34,7 @@ public class Player_Respawn : MonoBehaviour
             StartCoroutine(Respawning());
             transform.position = currentCheckPoint.position;
             transform.localScale = currentCheckPoint.localScale;
-            playerHealth.addHealth(healthRespawn);
+            playerHealth.AddHealth(healthRespawn);
             playerHealth.IsRespawnCheckPoint();
         }
     }
