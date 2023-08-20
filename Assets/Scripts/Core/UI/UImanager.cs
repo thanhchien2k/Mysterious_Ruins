@@ -12,6 +12,7 @@ public class UImanager : MonoBehaviour
     [SerializeReference] private GameObject overScreenDialog;
 
     private PlayerController playerControl;
+    [SerializeField] private AudioClip explosionSound;
 
     private void Awake()
     {

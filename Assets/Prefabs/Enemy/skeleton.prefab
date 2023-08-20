@@ -138,6 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyDamage: 1
   maxHealth: 1
+  explosionSound: {fileID: 8300000, guid: 6a21a9d6ecca71441b41efb4927aa072, type: 3}
   speed: 2
   ways: {fileID: 0}
   isMove: 1

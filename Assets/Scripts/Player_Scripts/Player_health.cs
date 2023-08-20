@@ -34,40 +34,15 @@ public class Player_health : MonoBehaviour
     }
 
     public void TakeDamage(float _damage)
-    {   if (invulnerable) return;
-        currentHeath = Mathf.Clamp(currentHeath - _damage, 0,maxHealth);
-        if (currentHeath > 0)
+        
+    {   if (playerRespawn.GetIsDeep())
         {
-            ani.SetTrigger("isHurt");
-            SoundManager.instance.PlaySound(hurtSound);
-            StartCoroutine(Invulnerability());
-
+            SubHealth(_damage);
+            return;
         }
-        else 
-        {
-            if (playerRespawn.CanRespawnCheckPoint()) 
-            {
-                ani.SetTrigger("isHurt");
-                SoundManager.instance.PlaySound(hurtSound);
-                StartCoroutine(Invulnerability());
-            }
-            else if (!dead)
-
-            {
-                foreach (Behaviour comp in component)
-                {
-                    comp.enabled = false;
-                }
-
-                dead = true;
-
-                SoundManager.instance.PlaySound(deadthSound);
-
-                uiManager.GameOver();
-
-                gameObject.SetActive(false);
-            }
-        }
+        if (invulnerable) return;
+        SubHealth(_damage);
+       
     }
 
     public void AddHealth(float _value)
@@ -111,5 +86,42 @@ public class Player_health : MonoBehaviour
         Physics2D.IgnoreLayerCollision(9, 10, false);
 
         invulnerable = false;
+    }
+
+    private void SubHealth(float _damage1)
+    {
+        currentHeath = Mathf.Clamp(currentHeath - _damage1, 0, maxHealth);
+        if (currentHeath > 0)
+        {
+            ani.SetTrigger("isHurt");
+            SoundManager.instance.PlaySound(hurtSound);
+            StartCoroutine(Invulnerability());
+
+        }
+        else
+        {
+            if (playerRespawn.CanRespawnCheckPoint())
+            {
+                ani.SetTrigger("isHurt");
+                SoundManager.instance.PlaySound(hurtSound);
+                StartCoroutine(Invulnerability());
+            }
+            else if (!dead)
+
+            {
+                foreach (Behaviour comp in component)
+                {
+                    comp.enabled = false;
+                }
+
+                dead = true;
+
+                SoundManager.instance.PlaySound(deadthSound);
+
+                uiManager.GameOver();
+
+                gameObject.SetActive(false);
+            }
+        }
     }
 }

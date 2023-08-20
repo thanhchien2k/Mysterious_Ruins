@@ -21,6 +21,7 @@ public class Level1_box : MonoBehaviour
         if(isNextLevelBox && Input.GetKey(KeyCode.UpArrow))
         {
             GameManager.instance.UnlockLevel();
+            SoundManager.instance.PlaySound(victorySound);
             GameManager.instance.OpenUI(levelCompleteScreen);
             if (playerControll != null || playerAttack!= null) 
             {

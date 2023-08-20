@@ -61,6 +61,11 @@ public class Player_Respawn : MonoBehaviour
         }
     }
 
+    public bool GetIsDeep()
+    {
+        return isDeep;
+    }
+
     private IEnumerator Respawning()
     {
         PlayerController player = GetComponent<PlayerController>();

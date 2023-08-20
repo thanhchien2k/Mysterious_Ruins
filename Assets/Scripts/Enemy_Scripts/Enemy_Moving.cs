@@ -32,6 +32,8 @@ public class Enemy_Moving : Enemy
     {
         ani = GetComponent<Animator>();
         ani.SetBool("run", true);
+        ani.speed = 1;
+        speedMultiplier = 1;
     }
     private void Start()
     {   
@@ -122,6 +124,14 @@ public class Enemy_Moving : Enemy
     protected override void Die()
     {
         base.Die();
+        ani.SetTrigger("die");
+        gameObject.GetComponent<Enemy>().enemyDamage = 0;
+        isMove = false;
+        SoundManager.instance.PlaySound(explosionSound);
+    }
+
+    private void Deactive()
+    {
         gameObject.SetActive(false);
     }
 }

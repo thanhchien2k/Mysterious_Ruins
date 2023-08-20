@@ -6,14 +6,18 @@ using UnityEngine.SocialPlatforms;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] protected float enemyDamage;
+    [SerializeField] public float enemyDamage;
     public float maxHealth;
     protected float currentHealth;
+    private Animator ani;
+    public AudioClip explosionSound;
 
 
      void Start()
     {
         currentHealth = maxHealth;
+        ani = GetComponent<Animator>();
+        ani.speed = 1;
     }
 
     public void TakeDamage(float amount)
@@ -27,8 +31,9 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Die()
     {
-        gameObject.SetActive(false);
+
     }
+
 
     public void OnTriggerEnter2D(Collider2D collision)
     {

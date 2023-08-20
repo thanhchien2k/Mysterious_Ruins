@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class Enemy_follow : Enemy
 {
@@ -30,6 +31,7 @@ public class Enemy_follow : Enemy
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         enemyMoving = gameObject.GetComponent<Enemy_Moving>();
         ani = GetComponent<Animator>();
+        ani.speed = 1;
 
     }
 
@@ -185,6 +187,13 @@ public class Enemy_follow : Enemy
     protected override void Die()
     {
         base.Die();
+        ani.SetTrigger("die");
+        gameObject.GetComponent<Enemy>().enemyDamage = 0;
+        SoundManager.instance.PlaySound(explosionSound);
+    }
+
+    private void Deactive()
+    {
         gameObject.SetActive(false);
     }
 

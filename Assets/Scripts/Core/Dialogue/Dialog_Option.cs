@@ -16,12 +16,12 @@ public class Dialog_Option : MonoBehaviour
         dialogue.actors = option1.actor;
     }
     private void Update()
-    {   
+    {
         if (playerItem.GetPower() < playerItem.GetMaxPower()) return;
 
-            dialogue.messages = option2.message;
-            dialogue.actors = option2.actor;
-        
+        dialogue.messages = option2.message;
+        dialogue.actors = option2.actor;
+
     }
 }
 

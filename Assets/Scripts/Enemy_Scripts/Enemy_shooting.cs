@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class Enemy_shooting : Enemy
 {
@@ -13,6 +14,7 @@ public class Enemy_shooting : Enemy
     private void Start()
     {
         ani = GetComponent<Animator>();
+        ani.speed = 1;
     }
     private void EnemyShooting()
     {
@@ -41,6 +43,13 @@ public class Enemy_shooting : Enemy
     protected override void Die()
     {
         base.Die();
+        ani.SetTrigger("die");
+        gameObject.GetComponent<Enemy>().enemyDamage = 0;
+        SoundManager.instance.PlaySound(explosionSound);
+    }
+
+    private void Deactive()
+    {
         gameObject.SetActive(false);
     }
 

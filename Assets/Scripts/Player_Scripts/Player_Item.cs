@@ -20,6 +20,15 @@ public class Player_Item : MonoBehaviour
         playerBullet = 0;
     }
 
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.L))
+        {
+            curentPower = maxPower;
+            currentCard = "Red";
+        }
+    }
+
     public void AddBullet(int _value)
     {
         playerBullet =Mathf.Clamp(playerBullet + _value, 0, maxBullet);

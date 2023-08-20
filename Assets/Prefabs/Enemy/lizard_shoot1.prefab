@@ -170,6 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyDamage: 1
   maxHealth: 1
+  explosionSound: {fileID: 0}
   Speed: 6.8
   hit: 0
 --- !u!1 &3928072461640604448
@@ -377,6 +378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyDamage: 1
   maxHealth: 1
+  explosionSound: {fileID: 0}
   Speed: 6.8
   hit: 0
 --- !u!1 &3928072462012033524
@@ -549,6 +551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyDamage: 1
   maxHealth: 1
+  explosionSound: {fileID: 0}
   Speed: 6.8
   hit: 0
 --- !u!1 &3928072462541397326
@@ -723,6 +726,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyDamage: 1
   maxHealth: 1
+  explosionSound: {fileID: 8300000, guid: 6a21a9d6ecca71441b41efb4927aa072, type: 3}
   firePoint: {fileID: 3928072463483352885}
   fireBall:
   - {fileID: 3928072462012033524}
@@ -900,6 +904,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyDamage: 1
   maxHealth: 1
+  explosionSound: {fileID: 0}
   Speed: 6.8
   hit: 0
 --- !u!1 &3928072463483352886

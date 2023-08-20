@@ -26,6 +26,7 @@ public class MainMenu_IU : MonoBehaviour
 
     public void OpenUI(Transform _value)
     {
+        _value.transform.localScale = Vector2.zero;
         _value.LeanScale(Vector2.one, 0.8f).setEaseInOutCubic();
     }
     public void CloseUI(Transform _value)
@@ -48,6 +49,16 @@ public class MainMenu_IU : MonoBehaviour
         //myTransform = _value; 
 
     }
+    public void HiddenUI(Transform _value)
+    {
+        _value.transform.localScale = Vector2.zero;
+
+    }
+
+    public void PlaySound(AudioClip ClickSound)
+    {
+        SoundManager.instance.PlaySound(ClickSound);
+    } 
 
     private void OnCompleted()
     {

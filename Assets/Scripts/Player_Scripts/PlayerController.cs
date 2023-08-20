@@ -59,8 +59,6 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        isGrounded = check.groundCheck;
-
         SmoothJump();
 
         if (isGrounded)
@@ -104,8 +102,9 @@ public class PlayerController : MonoBehaviour
             ani.SetBool("isJump", false);
             return;
         }
+        isGrounded = check.groundCheck;
 
-        moveInput = Input.GetAxisRaw("Horizontal");
+        moveInput = UserInput.instance.MoveInput.x;
 
         if (isOnPlatform)
         {
@@ -130,7 +129,7 @@ public class PlayerController : MonoBehaviour
 
         // ktra dieu kien nhay
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (UserInput.instance.JumpJustPressed)
         {
             if (isGrounded && !isClimbing)
             {
@@ -149,7 +148,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // climbing ladder
-        verticalInput = Input.GetAxisRaw("Vertical");
+        verticalInput = UserInput.instance.LadderInput.y;
 
         if (isLadder && Mathf.Abs(verticalInput) > 0f)
         {
@@ -207,10 +206,9 @@ public class PlayerController : MonoBehaviour
             rb.velocity += Vector2.up * Physics2D.gravity.y * (5 - 1) * Time.deltaTime; // tang van toc roi
 
         }
-        else if (rb.velocity.y > 0 && !(Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)))
+        else if (rb.velocity.y > 0 && !(UserInput.instance.JumpBeingHeld))
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (5 - 1) * Time.deltaTime; // giam do cao khi ko giu nut space
-
         }
 
     }
@@ -224,6 +222,11 @@ public class PlayerController : MonoBehaviour
     public bool CanRunAttack()
     {
         return isGrounded && moveInput != 0;
+    }
+
+    public bool IsLandDust()
+    {
+        return isGrounded;
     }
 
     public bool CanAttack()
@@ -246,10 +249,6 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = _value;
     }
 
-    public bool CanChangeCamera()
-    {
-        return !(!isClimbing && isLadder);
-    }
 
     private void UpdateAnimations()
     {   

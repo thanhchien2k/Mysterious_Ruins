@@ -34,13 +34,13 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && playerController.CanRunAttack() && Items.GetBullet()>0 )
+        if (UserInput.instance.AttackInput && playerController.CanRunAttack() && Items.GetBullet()>0 )
         {
             RunAttack();
             Items.SubBullet(1);
             
         }
-        else if(Input.GetKeyDown(KeyCode.F) && playerController.CanAttack() && Items.GetBullet() > 0)
+        else if(UserInput.instance.AttackInput && playerController.CanAttack() && Items.GetBullet() > 0)
         {
             Attack();
             Items.SubBullet(1);

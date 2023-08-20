@@ -20,7 +20,7 @@ public class Camera_room : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player") && !collision.isTrigger && playerController.CanChangeCamera())
+        if(collision.CompareTag("Player") && !collision.isTrigger)
         {
             virtualCam.SetActive(true);
 
@@ -35,7 +35,7 @@ public class Camera_room : MonoBehaviour
 
     private void OnTriggerExit2D (Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !collision.isTrigger && playerController.CanChangeCamera())
+        if (collision.CompareTag("Player") && !collision.isTrigger )
         {
             virtualCam.SetActive(false);
 

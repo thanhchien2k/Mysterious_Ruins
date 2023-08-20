@@ -6,12 +6,14 @@ public class DialogueTrigger : MonoBehaviour
 {
     public Message[] messages;
     public Actor[] actors;
+    public TextAsset ink;
+    public string id;
 
 
     public void StartDialogue()
     {
 
-        FindAnyObjectByType<DialogueManager>().OpenDialogue(messages, actors);
+        FindAnyObjectByType<DialogueManager>().OpenDialogue(messages, actors, ink, id);
     }
 }
 
