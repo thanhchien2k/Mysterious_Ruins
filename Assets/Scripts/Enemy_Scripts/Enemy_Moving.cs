@@ -28,13 +28,6 @@ public class Enemy_Moving : Enemy
         }
     }
 
-    private void OnEnable()
-    {
-        ani = GetComponent<Animator>();
-        ani.SetBool("run", true);
-        ani.speed = 1;
-        speedMultiplier = 1;
-    }
     private void Start()
     {   
         pointCount = WayPoints.Length -1 ;
@@ -133,5 +126,14 @@ public class Enemy_Moving : Enemy
     private void Deactive()
     {
         gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+            ani = GetComponent<Animator>();
+            ani.SetBool("run", true);
+            ani.speed = 1;
+            speedMultiplier = 1;
+            transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
     }
 }

@@ -9,15 +9,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] public float enemyDamage;
     public float maxHealth;
     protected float currentHealth;
-    private Animator ani;
     public AudioClip explosionSound;
 
 
      void Start()
     {
         currentHealth = maxHealth;
-        ani = GetComponent<Animator>();
-        ani.speed = 1;
+        //ani = GetComponent<Animator>();
+        //ani.speed = 1;
     }
 
     public void TakeDamage(float amount)

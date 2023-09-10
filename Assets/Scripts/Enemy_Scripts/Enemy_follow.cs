@@ -32,7 +32,6 @@ public class Enemy_follow : Enemy
         enemyMoving = gameObject.GetComponent<Enemy_Moving>();
         ani = GetComponent<Animator>();
         ani.speed = 1;
-
     }
 
     // Update is called once per frame
@@ -195,6 +194,15 @@ public class Enemy_follow : Enemy
     private void Deactive()
     {
         gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+            ani = GetComponent<Animator>();
+            ani.SetBool("isFury", false);
+            ani.SetBool("isShocked", false);
+            ani.speed = 1;
+            transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
     }
 
 }
